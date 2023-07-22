@@ -2,7 +2,6 @@ package main
 
 import (
 	"math/rand"
-	"time"
 )
 
 type Game struct {
@@ -12,7 +11,8 @@ type Game struct {
 	Grid     [][]int
 }
 
-func NewGame() Game {
+func NewGame(seed int64) Game {
+	rand.Seed(seed)
 	return Game{
 		Score:    0,
 		Moves:    0,
@@ -121,7 +121,6 @@ func addNewNumber(grid [][]int) {
 	if len(emptyCells) == 0 {
 		return
 	}
-	rand.Seed(time.Now().UnixNano())
 	randomIndex := rand.Intn(len(emptyCells))
 	cell := emptyCells[randomIndex]
 	if rand.Intn(10) < 9 {

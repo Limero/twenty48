@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/gdamore/tcell/v2"
 )
@@ -21,7 +22,7 @@ func main() {
 		return
 	}
 
-	game := NewGame()
+	game := NewGame(time.Now().UnixNano())
 
 	for {
 		screen.Clear()
@@ -36,7 +37,7 @@ func main() {
 		action := handleInput(screen)
 		switch action {
 		case ActionReset:
-			game = NewGame()
+			game = NewGame(time.Now().UnixNano())
 		case ActionUp, ActionDown, ActionLeft, ActionRight:
 			if game.GameOver {
 				continue
