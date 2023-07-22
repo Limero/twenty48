@@ -46,7 +46,7 @@ func drawGrid(screen tcell.Screen, grid [][]int) {
 			}
 
 			for i, c := range []rune(centerString(fmt.Sprintf("%d", col), 6)) {
-				screen.SetContent((1+7*x)+i, (y*2)+2, c, nil, tcell.StyleDefault)
+				screen.SetContent((1+7*x)+i, (y*2)+2, c, nil, getColor(col))
 			}
 		}
 	}
