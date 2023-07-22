@@ -1,19 +1,17 @@
 package main
 
 import (
-	"math/rand"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGame(t *testing.T) {
-	rand.Seed(time.Now().UnixNano())
-
 	g := NewGame()
 	for !isGameOver(g.Grid) {
-		g.performAction(Action(rand.Intn(4)))
+		for i := 0; i < 4; i++ {
+			g.performAction(Action(i))
+		}
 	}
 
 	assert.Greater(t, g.Score, 0)
