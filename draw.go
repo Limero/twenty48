@@ -25,34 +25,31 @@ func drawGameOver(screen tcell.Screen) {
 func drawGrid(screen tcell.Screen, grid [][]int) {
 	g := []string{
 		"┌──────┬──────┬──────┬──────┐",
-		gridRow(grid[0]),
+		"│      │      │      │      │",
 		"├──────┼──────┼──────┼──────┤",
-		gridRow(grid[1]),
+		"│      │      │      │      │",
 		"├──────┼──────┼──────┼──────┤",
-		gridRow(grid[2]),
+		"│      │      │      │      │",
 		"├──────┼──────┼──────┼──────┤",
-		gridRow(grid[3]),
+		"│      │      │      │      │",
 		"└──────┴──────┴──────┴──────┘",
 	}
 
 	for y, row := range g {
 		drawLine(screen, y+1, row)
 	}
-}
 
-func gridRow(col []int) string {
-	l := "│"
+	for y, row := range grid {
+		for x, col := range row {
+			if col == 0 {
+				continue
+			}
 
-	for _, c := range col {
-		if c == 0 {
-			l += fmt.Sprintf("%6s│", " ")
-			continue
+			for i, c := range []rune(centerString(fmt.Sprintf("%d", col), 6)) {
+				screen.SetContent((1+7*x)+i, (y*2)+2, c, nil, tcell.StyleDefault)
+			}
 		}
-
-		l += fmt.Sprintf("%s│", centerString(fmt.Sprintf("%d", c), 6))
 	}
-
-	return l
 }
 
 func centerString(s string, width int) string {
