@@ -33,10 +33,10 @@ var directions = [4][2]int{
 	{0, 1},  // Right
 }
 
-func performAction(grid [][]int, action Action) (bool, int) {
+func (g *Game) performAction(action Action) {
 	moved := false
 	points := 0
-	rows, cols := len(grid), len(grid[0])
+	rows, cols := len(g.Grid), len(g.Grid[0])
 
 	move := func(row, col, dr, dc int) {
 		for {
@@ -48,16 +48,16 @@ func performAction(grid [][]int, action Action) (bool, int) {
 			}
 
 			// If the current cell is empty, move the number to it
-			if grid[r][c] == 0 {
-				grid[r][c] = grid[row][col]
-				grid[row][col] = 0
+			if g.Grid[r][c] == 0 {
+				g.Grid[r][c] = g.Grid[row][col]
+				g.Grid[row][col] = 0
 				row, col = r, c
 				moved = true
-			} else if grid[r][c] == grid[row][col] { // If the numbers are the same, merge them
-				grid[r][c] *= 2
-				grid[row][col] = 0
+			} else if g.Grid[r][c] == g.Grid[row][col] { // If the numbers are the same, merge them
+				g.Grid[r][c] *= 2
+				g.Grid[row][col] = 0
 				moved = true
-				points += grid[r][c]
+				points += g.Grid[r][c]
 				break
 			} else { // If the numbers are different, stop moving
 				break
@@ -67,7 +67,7 @@ func performAction(grid [][]int, action Action) (bool, int) {
 
 	for i := 0; i < rows; i++ {
 		for j := 0; j < cols; j++ {
-			if grid[i][j] != 0 {
+			if g.Grid[i][j] != 0 {
 				switch action {
 				case ActionUp:
 					move(i, j, directions[0][0], directions[0][1])
@@ -82,7 +82,15 @@ func performAction(grid [][]int, action Action) (bool, int) {
 		}
 	}
 
-	return moved, points
+	if moved {
+		g.Score += points
+		g.Moves++
+		addNewNumber(g.Grid)
+	}
+
+	if isGameOver(g.Grid) {
+		g.GameOver = true
+	}
 }
 
 func hasEmptyCells(grid [][]int) bool {

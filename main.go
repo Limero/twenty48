@@ -28,8 +28,7 @@ func main() {
 
 		drawInfo(screen, game.Score, game.Moves)
 		drawGrid(screen, game.Grid)
-		if isGameOver(game.Grid) {
-			game.GameOver = true
+		if game.GameOver {
 			drawGameOver(screen)
 		}
 
@@ -42,12 +41,7 @@ func main() {
 			if game.GameOver {
 				continue
 			}
-			moved, points := performAction(game.Grid, action)
-			if moved {
-				game.Moves++
-				game.Score += points
-				addNewNumber(game.Grid)
-			}
+			game.performAction(action)
 		case ActionQuit:
 			return
 		}
