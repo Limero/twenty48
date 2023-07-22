@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/gdamore/tcell/v2"
 )
@@ -47,8 +48,22 @@ func gridRow(col []int) string {
 			l += fmt.Sprintf("%6s│", " ")
 			continue
 		}
-		l += fmt.Sprintf("%6d│", c)
+
+		l += fmt.Sprintf("%s│", centerString(fmt.Sprintf("%d", c), 6))
 	}
 
 	return l
+}
+
+func centerString(s string, width int) string {
+	spaces := width - len(s)
+	leftSpaces := spaces / 2
+	rightSpaces := spaces - leftSpaces
+
+	if spaces%2 != 0 {
+		leftSpaces++
+	}
+
+	s = strings.Repeat(" ", leftSpaces) + s + strings.Repeat(" ", rightSpaces)
+	return s[:width]
 }
