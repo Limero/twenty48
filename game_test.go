@@ -15,7 +15,7 @@ func TestGame(t *testing.T) {
 		}
 	}
 
-	assert.Equal(t, g.Score, 800)
-	assert.Equal(t, g.Moves, 99)
+	assert.Equal(t, 452, g.Score)
+	assert.Equal(t, 74, g.Moves)
 	assert.True(t, g.GameOver)
 }

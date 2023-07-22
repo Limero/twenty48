@@ -17,13 +17,31 @@ func NewGame(seed int64) Game {
 		Score:    0,
 		Moves:    0,
 		GameOver: false,
-		Grid: [][]int{
-			{0, 0, 0, 0},
-			{0, 0, 0, 0},
-			{0, 0, 0, 0},
-			{0, 0, 2, 2},
-		},
+		Grid:     newGrid(),
 	}
+}
+
+func newGrid() [][]int {
+	grid := [][]int{
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+		{0, 0, 0, 0},
+	}
+
+	grid[rand.Intn(4)][rand.Intn(4)] = 2
+
+	// Add the second starting number,
+	// making sure it's never on the same position as the first
+	for {
+		i, j := rand.Intn(4), rand.Intn(4)
+		if grid[i][j] == 0 {
+			grid[i][j] = 2
+			break
+		}
+	}
+
+	return grid
 }
 
 var directions = [4][2]int{
