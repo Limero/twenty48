@@ -9,6 +9,9 @@ import (
 
 func drawLine(screen tcell.Screen, y int, line string) {
 	for x, c := range []rune(line) {
+		if c == ' ' {
+			continue
+		}
 		screen.SetContent(x, y, c, nil, tcell.StyleDefault)
 	}
 }
